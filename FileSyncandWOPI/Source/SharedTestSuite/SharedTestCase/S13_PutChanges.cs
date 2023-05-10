@@ -1190,7 +1190,7 @@ namespace Microsoft.Protocols.TestSuites.SharedTestSuite
         }
 
         /// <summary>
-        /// A method used to verify server check the index entry that is actually applied when Coherency Check Only Applied Index Entries set to 1.
+        /// A method used to verify server will attempt to check the Put Changes request for the re-use of previously used IDs when Check For Id Reuse set to 1.
         /// </summary>
         [TestCategory("SHAREDTESTCASE"), TestMethod()]
         public void TestCase_S13_TC20_PutChanges_CheckForIdReuse()
@@ -1236,34 +1236,25 @@ namespace Microsoft.Protocols.TestSuites.SharedTestSuite
 
             if (SharedContext.Current.IsMsFsshttpRequirementsCaptured)
             {
-                // Verify MS-FSSHTTPB requirement: MS-FSSHTTPB_R99049
+                // Verify MS-FSSHTTPB requirement: MS-FSSHTTPB_R99046
                 Site.CaptureRequirementIfAreEqual<ErrorCodeType>(
-                         ErrorCodeType.CellRequestFail,
-                         SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
-                         "MS-FSSHTTPB",
-                         99049,
-                         @"[Additional Flags] When D – Coherency Check Only Applied Index Entries (1 bit) is set, the server check the index entry that is actually applied and an index entry that is not applied is not checked.");
+                    ErrorCodeType.CellRequestFail,
+                    SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
+                    99046,
+                    @"[Additional Flags] C – Check for Id Reuse (1 bit): A bit that specifies that the server will attempt to check the Put Changes request for the re-use of previously used IDs. ");
 
                 Site.CaptureRequirementIfAreEqual<ErrorCodeType>(
-                         ErrorCodeType.CellRequestFail,
-                         SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
-                         "MS-FSSHTTPB",
-                         99046,
-                         @"[Additional Flags] C – Check for Id Reuse (1 bit): A bit that specifies that the server will attempt to check the Put Changes request for the re-use of previously used IDs. ");
-
-                Site.CaptureRequirementIfAreEqual<ErrorCodeType>(
-                         ErrorCodeType.CellRequestFail,
-                         SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
-                         "MS-FSSHTTPB",
-                         99047,
-                         @"[Additional Flags] This [check the Put Changes Request for the re-use of previously used Ids] might occur when ID allocations are used and a client rollback occurs.");
+                    ErrorCodeType.CellRequestFail,
+                    SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
+                    99047,
+                    @"[Additional Flags] This [check the Put Changes Request for the re-use of previously used Ids] might occur when ID allocations are used and a client rollback occurs.");
             }
             else
             {
                 Site.Assert.AreEqual<ErrorCodeType>(
                     ErrorCodeType.CellRequestFail,
                     SharedTestSuiteHelper.ConvertToErrorCodeType(cellSubResponse.ErrorCode, this.Site),
-                    @"[Additional Flags] When D - Coherency Check Only Applied Index Entries (1 bit) is set, the server check the index entry that is actually applied and an index entry that is not applied is not checked.");
+                    @"[Additional Flags] C – Check for Id Reuse (1 bit): A bit that specifies that the server will attempt to check the Put Changes request for the re-use of previously used IDs. ");
             }
         }
 
